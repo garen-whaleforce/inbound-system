@@ -5,7 +5,6 @@ import BorrowReturnForm from './components/BorrowReturnForm';
 import ExcelPanel from './components/ExcelPanel';
 import WordPanel from './components/WordPanel';
 import type { FormData, SampleItem } from './types';
-import logo from './assets/logo.svg';
 import './App.css';
 
 const createInitialForm = (): FormData => ({
@@ -40,13 +39,7 @@ const App: React.FC = () => {
 
   return (
     <div className="container">
-      <div className="brand-bar">
-        <img src={logo} alt="ANSETT LAB 安捷檢測有限公司" className="brand-logo" />
-        <div className="brand-text">
-          <div className="brand-name">安捷檢測有限公司</div>
-          <div className="brand-subtitle">出入庫管理系統</div>
-        </div>
-      </div>
+      <h1 className="page-title">出入庫管理系統</h1>
       <HeaderForm formData={formData} onChange={updateField} />
       <SampleDetailsTable sampleItems={formData.sampleItems} onChange={updateSampleItems} />
       <BorrowReturnForm formData={formData} onChange={updateField} />
