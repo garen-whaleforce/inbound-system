@@ -4,10 +4,24 @@
   padding: 32px 20px 48px;
 }
 
-h1 {
-  text-align: center;
+.brand-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
   margin-bottom: 24px;
-  letter-spacing: 0.03em;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.brand-logo {
+  max-width: 480px;
+  height: auto;
+}
+
+.brand-title {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
 }
 
 .card {
