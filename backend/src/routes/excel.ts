@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import { addRow, overwriteRow, readRow, ValidationError } from '../services/excelService';
 import { PATHS } from '../config/paths';
+import type { FormData } from '../types';
 
 const router = express.Router();
 
