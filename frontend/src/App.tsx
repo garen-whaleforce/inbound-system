@@ -42,7 +42,10 @@ const App: React.FC = () => {
     <div className="container">
       <div className="brand-bar">
         <img src={logo} alt="ANSETT LAB 安捷檢測有限公司" className="brand-logo" />
-        <div className="brand-title">出入庫管理系統</div>
+        <div className="brand-text">
+          <div className="brand-name">安捷檢測有限公司</div>
+          <div className="brand-subtitle">出入庫管理系統</div>
+        </div>
       </div>
       <HeaderForm formData={formData} onChange={updateField} />
       <SampleDetailsTable sampleItems={formData.sampleItems} onChange={updateSampleItems} />
