@@ -8,3 +8,5 @@ dist/
 .DS_Store
 *.log
 
+# Local backups
+backend/data/templates/ori/
