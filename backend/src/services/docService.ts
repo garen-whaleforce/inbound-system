@@ -10,7 +10,11 @@ function renderTemplate(templatePath: string, data: Record<string, unknown>): Bu
   }
   const content = fs.readFileSync(templatePath);
   const zip = new PizZip(content);
-  const doc = new Docxtemplater(zip, { paragraphLoop: true, linebreaks: true });
+  const doc = new Docxtemplater(zip, {
+    paragraphLoop: true,
+    linebreaks: true,
+    delimiters: { start: '[[', end: ']]' },
+  });
   doc.render(data);
   return doc.getZip().generate({ type: 'nodebuffer' });
 }
