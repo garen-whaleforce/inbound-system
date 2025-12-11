@@ -12,11 +12,19 @@ interface LabelData {
 }
 
 interface LabelRow {
-  c1?: LabelData;
-  c2?: LabelData;
-  c3?: LabelData;
-  c4?: LabelData;
-  c5?: LabelData;
+  col1?: LabelData;
+  col2?: LabelData;
+  col3?: LabelData;
+  col4?: LabelData;
+  col5?: LabelData;
+  col6?: LabelData;
+  col7?: LabelData;
+  col8?: LabelData;
+  col9?: LabelData;
+  col10?: LabelData;
+  col11?: LabelData;
+  col12?: LabelData;
+  col13?: LabelData;
 }
 
 function renderTemplate(templatePath: string, data: Record<string, unknown>): Buffer {
@@ -101,15 +109,23 @@ export function buildLabelsFromForm(form: FormData): LabelData[] {
   return labels;
 }
 
-function buildLabelRows(labels: LabelData[], perRow = 5): LabelRow[] {
+function buildLabelRows(labels: LabelData[]): LabelRow[] {
   const rows: LabelRow[] = [];
-  for (let i = 0; i < labels.length; i += perRow) {
+  for (let i = 0; i < labels.length; i += 13) {
     rows.push({
-      c1: labels[i],
-      c2: labels[i + 1],
-      c3: labels[i + 2],
-      c4: labels[i + 3],
-      c5: labels[i + 4],
+      col1: labels[i],
+      col2: labels[i + 1],
+      col3: labels[i + 2],
+      col4: labels[i + 3],
+      col5: labels[i + 4],
+      col6: labels[i + 5],
+      col7: labels[i + 6],
+      col8: labels[i + 7],
+      col9: labels[i + 8],
+      col10: labels[i + 9],
+      col11: labels[i + 10],
+      col12: labels[i + 11],
+      col13: labels[i + 12],
     });
   }
   return rows;
@@ -122,7 +138,7 @@ export function generateLabelDoc(form: FormData): Buffer {
   console.log('generateLabelDoc labels.length =', labels.length);
   // eslint-disable-next-line no-console
   if (labels.length > 0) console.log('generateLabelDoc labels[0] =', labels[0]);
-  const labelRows = buildLabelRows(labels, 5);
+  const labelRows = buildLabelRows(labels);
   // eslint-disable-next-line no-console
   console.log('labelRows[0] =', labelRows[0]);
   const data = { labelRows };
