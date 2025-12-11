@@ -151,6 +151,13 @@ export function generateLabelDoc(form: FormData): Buffer {
   const labelRows = buildLabelRows(labels);
   // eslint-disable-next-line no-console
   console.log('labelRows[0] =', JSON.stringify(labelRows[0], null, 2));
+  // extra debug
+  // eslint-disable-next-line no-console
+  console.log('labels.length =', labels.length);
+  // eslint-disable-next-line no-console
+  console.log('labelRows.length =', labelRows.length);
+  // eslint-disable-next-line no-console
+  console.log('labelRows[0] keys =', Object.keys(labelRows[0] || {}));
   const data = { labelRows };
   return renderTemplate(PATHS.TEMPLATE_LABEL, data);
 }
