@@ -42,7 +42,7 @@ const HEADER_MAP: Record<HeaderKey, string> = {
   inOperator: '樣品入庫人',
   inDate: '入庫日期',
   totalInQty: '入庫總數量',
-  sampleNo: '樣品編號',
+  sampleNo: '樣品總編號',
   sampleName: '樣品名稱',
   remark: '備註',
   borrowDate: '樣品借出日期',
