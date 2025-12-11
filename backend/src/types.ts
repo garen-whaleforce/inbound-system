@@ -1,6 +1,7 @@
 export interface SampleItem {
   sampleNo: string; // 樣品編號
   sampleName: string; // 樣品名稱
+  qty: number; // 樣品數量（標籤張數）
   remark: string; // 備註
 }
 

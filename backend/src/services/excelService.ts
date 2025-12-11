@@ -123,6 +123,7 @@ function normalizeSampleItems(items: SampleItem[]): SampleItem[] {
     return [
       {
         sampleNo: '',
+        qty: 1,
         sampleName: '',
         remark: '',
       },
@@ -132,6 +133,7 @@ function normalizeSampleItems(items: SampleItem[]): SampleItem[] {
     .slice(0, 10)
     .map((item) => ({
       sampleNo: item.sampleNo?.trim() || '',
+      qty: item.qty && item.qty > 0 ? item.qty : 1,
       sampleName: item.sampleName?.trim() || '',
       remark: item.remark || '',
     }));
@@ -247,6 +249,7 @@ function rowToFormData(row: ExcelJS.Row, worksheet: Worksheet): FormData {
   const sampleItems: SampleItem[] = [
     {
       sampleNo: getter('sampleNo'),
+      qty: 1,
       sampleName: getter('sampleName'),
       remark,
     },

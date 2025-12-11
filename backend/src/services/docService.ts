@@ -4,6 +4,13 @@ import Docxtemplater from 'docxtemplater';
 import { PATHS } from '../config/paths';
 import { FormData } from '../types';
 
+interface LabelData {
+  labelCaseNo: string;
+  customerName: string;
+  model: string;
+  inDate: string;
+}
+
 function renderTemplate(templatePath: string, data: Record<string, unknown>): Buffer {
   if (!fs.existsSync(templatePath)) {
     throw new Error(`Template not found: ${templatePath}`);
@@ -49,12 +56,50 @@ export function generateOuterBoxDoc(form: FormData): Buffer {
   return renderTemplate(PATHS.TEMPLATE_OUTER_BOX, data);
 }
 
+export function buildLabelCodes(sampleNo: string, qty: number): string[] {
+  const match = sampleNo.match(/(\d+)$/);
+  const count = qty && qty > 0 ? qty : 1;
+  if (!match) {
+    return Array.from({ length: count }, () => sampleNo);
+  }
+  const digits = match[1];
+  const width = digits.length;
+  const base = parseInt(digits, 10);
+  const prefix = sampleNo.slice(0, sampleNo.length - width);
+
+  const codes: string[] = [];
+  for (let i = 0; i < count; i += 1) {
+    const value = base + i;
+    const padded = String(value).padStart(width, '0');
+    codes.push(`${prefix}${padded}`);
+  }
+  return codes;
+}
+
+export function buildLabelsFromForm(form: FormData): LabelData[] {
+  const labels: LabelData[] = [];
+  (form.sampleItems || []).forEach((item) => {
+    const qty = item.qty && item.qty > 0 ? item.qty : 1;
+    const codes = buildLabelCodes(item.sampleNo, qty);
+    codes.forEach((code) => {
+      labels.push({
+        labelCaseNo: code,
+        customerName: form.customerName,
+        model: form.model,
+        inDate: form.inDate,
+      });
+    });
+  });
+  return labels;
+}
+
 export function generateLabelDoc(form: FormData): Buffer {
-  const data = {
-    labelCaseNo: form.caseNo,
-    customerName: form.customerName,
-    model: form.model,
-    inDate: form.inDate,
-  };
+  const labels = buildLabelsFromForm(form);
+  // debug log
+  // eslint-disable-next-line no-console
+  console.log('generateLabelDoc labels.length =', labels.length);
+  // eslint-disable-next-line no-console
+  if (labels.length > 0) console.log('generateLabelDoc labels[0] =', labels[0]);
+  const data = { labels };
   return renderTemplate(PATHS.TEMPLATE_LABEL, data);
 }
