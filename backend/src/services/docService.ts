@@ -17,14 +17,6 @@ interface LabelRow {
   col3?: LabelData;
   col4?: LabelData;
   col5?: LabelData;
-  col6?: LabelData;
-  col7?: LabelData;
-  col8?: LabelData;
-  col9?: LabelData;
-  col10?: LabelData;
-  col11?: LabelData;
-  col12?: LabelData;
-  col13?: LabelData;
 }
 
 function renderTemplate(templatePath: string, data: Record<string, unknown>): Buffer {
@@ -121,21 +113,13 @@ export function buildLabelsFromForm(form: FormData): LabelData[] {
 
 function buildLabelRows(labels: LabelData[]): LabelRow[] {
   const rows: LabelRow[] = [];
-  for (let i = 0; i < labels.length; i += 13) {
+  for (let i = 0; i < labels.length; i += 5) {
     rows.push({
       col1: labels[i],
       col2: labels[i + 1],
       col3: labels[i + 2],
       col4: labels[i + 3],
       col5: labels[i + 4],
-      col6: labels[i + 5],
-      col7: labels[i + 6],
-      col8: labels[i + 7],
-      col9: labels[i + 8],
-      col10: labels[i + 9],
-      col11: labels[i + 10],
-      col12: labels[i + 11],
-      col13: labels[i + 12],
     });
   }
   return rows;
