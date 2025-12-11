@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import HeaderForm from './components/HeaderForm';
 import SampleDetailsTable from './components/SampleDetailsTable';
 import BorrowReturnForm from './components/BorrowReturnForm';
-import ExcelPanel from './components/ExcelPanel';
 import WordPanel from './components/WordPanel';
 import type { FormData, SampleItem } from './types';
 import './App.css';
@@ -43,7 +42,6 @@ const App: React.FC = () => {
       <HeaderForm formData={formData} onChange={updateField} />
       <SampleDetailsTable sampleItems={formData.sampleItems} onChange={updateSampleItems} />
       <BorrowReturnForm formData={formData} onChange={updateField} />
-      <ExcelPanel formData={formData} setFormData={setFormData} />
       <WordPanel formData={formData} />
     </div>
   );
