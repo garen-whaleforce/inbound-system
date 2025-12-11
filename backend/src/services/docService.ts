@@ -11,6 +11,14 @@ interface LabelData {
   inDate: string;
 }
 
+interface LabelRow {
+  c1?: LabelData;
+  c2?: LabelData;
+  c3?: LabelData;
+  c4?: LabelData;
+  c5?: LabelData;
+}
+
 function renderTemplate(templatePath: string, data: Record<string, unknown>): Buffer {
   if (!fs.existsSync(templatePath)) {
     throw new Error(`Template not found: ${templatePath}`);
@@ -93,6 +101,20 @@ export function buildLabelsFromForm(form: FormData): LabelData[] {
   return labels;
 }
 
+function buildLabelRows(labels: LabelData[], perRow = 5): LabelRow[] {
+  const rows: LabelRow[] = [];
+  for (let i = 0; i < labels.length; i += perRow) {
+    rows.push({
+      c1: labels[i],
+      c2: labels[i + 1],
+      c3: labels[i + 2],
+      c4: labels[i + 3],
+      c5: labels[i + 4],
+    });
+  }
+  return rows;
+}
+
 export function generateLabelDoc(form: FormData): Buffer {
   const labels = buildLabelsFromForm(form);
   // debug log
@@ -100,6 +122,7 @@ export function generateLabelDoc(form: FormData): Buffer {
   console.log('generateLabelDoc labels.length =', labels.length);
   // eslint-disable-next-line no-console
   if (labels.length > 0) console.log('generateLabelDoc labels[0] =', labels[0]);
-  const data = { labels };
+  const labelRows = buildLabelRows(labels, 5);
+  const data = { labelRows };
   return renderTemplate(PATHS.TEMPLATE_LABEL, data);
 }
