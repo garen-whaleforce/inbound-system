@@ -9,14 +9,20 @@ interface SampleDetailsTableProps {
 const MAX_ROWS = 10;
 
 const SampleDetailsTable: React.FC<SampleDetailsTableProps> = ({ sampleItems, onChange }) => {
-  const handleChange = (index: number, key: keyof SampleItem, value: string) => {
+  const handleChange = (index: number, key: keyof SampleItem, value: string | number) => {
     const next = sampleItems.map((item, i) => (i === index ? { ...item, [key]: value } : item));
     onChange(next);
   };
 
+  const handleQtyChange = (index: number, raw: string) => {
+    const num = Number(raw);
+    const safe = Number.isFinite(num) && num > 0 ? Math.floor(num) : 1;
+    handleChange(index, 'qty', safe);
+  };
+
   const addRow = () => {
     if (sampleItems.length >= MAX_ROWS) return;
-    onChange([...sampleItems, { sampleNo: '', sampleName: '', remark: '' }]);
+    onChange([...sampleItems, { sampleNo: '', sampleName: '', qty: 1, remark: '' }]);
   };
 
   const removeRow = (index: number) => {
@@ -38,6 +44,7 @@ const SampleDetailsTable: React.FC<SampleDetailsTableProps> = ({ sampleItems, on
             <tr>
               <th>樣品編號*</th>
               <th>樣品名稱*</th>
+              <th>數量*</th>
               <th>備註</th>
               <th>操作</th>
             </tr>
@@ -55,6 +62,14 @@ const SampleDetailsTable: React.FC<SampleDetailsTableProps> = ({ sampleItems, on
                   <input
                     value={item.sampleName}
                     onChange={(e) => handleChange(index, 'sampleName', e.target.value)}
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    min={1}
+                    value={item.qty ?? 1}
+                    onChange={(e) => handleQtyChange(index, e.target.value)}
                   />
                 </td>
                 <td>
