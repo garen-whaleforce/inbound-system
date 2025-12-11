@@ -140,7 +140,7 @@ export function generateLabelDoc(form: FormData): Buffer {
   if (labels.length > 0) console.log('generateLabelDoc labels[0] =', labels[0]);
   const labelRows = buildLabelRows(labels);
   // eslint-disable-next-line no-console
-  console.log('labelRows[0] =', labelRows[0]);
+  console.log('labelRows[0] =', JSON.stringify(labelRows[0], null, 2));
   const data = { labelRows };
   return renderTemplate(PATHS.TEMPLATE_LABEL, data);
 }
