@@ -17,7 +17,7 @@ const createInitialForm = (): FormData => ({
   inOperator: '',
   inDate: '',
   totalInQty: 0,
-  sampleItems: [{ sampleNo: '', sampleName: '', remark: '' }],
+  sampleItems: [{ sampleNo: '', sampleName: '', qty: 1, remark: '' }],
   borrowDate: '',
   borrower: '',
   returnDate: '',

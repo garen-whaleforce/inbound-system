@@ -38,6 +38,8 @@ function getMissingFields(form: FormData): string[] {
   items.forEach((item, index) => {
     if (!item.sampleNo) missing.push(`sampleItems[${index}].sampleNo`);
     if (!item.sampleName) missing.push(`sampleItems[${index}].sampleName`);
+    const qty = Number(item.qty);
+    if (!Number.isFinite(qty) || qty < 1) missing.push(`sampleItems[${index}].qty`);
   });
   return missing;
 }
