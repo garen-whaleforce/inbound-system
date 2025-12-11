@@ -72,24 +72,34 @@ export function generateOuterBoxDoc(form: FormData): Buffer {
   return renderTemplate(PATHS.TEMPLATE_OUTER_BOX, data);
 }
 
-export function buildLabelCodes(sampleNo: string, qty: number): string[] {
-  const match = sampleNo.match(/(\d+)$/);
-  const count = qty && qty > 0 ? qty : 1;
-  if (!match) {
-    return Array.from({ length: count }, () => sampleNo);
-  }
-  const digits = match[1];
-  const width = digits.length;
-  const base = parseInt(digits, 10);
-  const prefix = sampleNo.slice(0, sampleNo.length - width);
+export function buildLabelCodes(baseNo: string, qty: number): string[] {
+  const result: string[] = [];
+  const safeQty = Math.max(1, qty || 1);
 
-  const codes: string[] = [];
-  for (let i = 0; i < count; i += 1) {
-    const value = base + i;
-    const padded = String(value).padStart(width, '0');
-    codes.push(`${prefix}${padded}`);
+  if (!baseNo) {
+    return result;
   }
-  return codes;
+
+  const m = baseNo.match(/(\d+)$/);
+
+  if (m) {
+    const digits = m[1];
+    const width = digits.length;
+    const prefix = baseNo.slice(0, -width);
+    let num = parseInt(digits, 10);
+
+    for (let i = 0; i < safeQty; i += 1, num += 1) {
+      const suffix = String(num).padStart(width, '0');
+      result.push(prefix + suffix);
+    }
+  } else {
+    for (let i = 1; i <= safeQty; i += 1) {
+      const suffix = String(i).padStart(2, '0');
+      result.push(`${baseNo}-${suffix}`);
+    }
+  }
+
+  return result;
 }
 
 export function buildLabelsFromForm(form: FormData): LabelData[] {
