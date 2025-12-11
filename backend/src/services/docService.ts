@@ -72,23 +72,10 @@ export function buildLabelCodes(baseNo: string, qty: number): string[] {
     return result;
   }
 
-  const m = baseNo.match(/(\d+)$/);
-
-  if (m) {
-    const digits = m[1];
-    const width = digits.length;
-    const prefix = baseNo.slice(0, -width);
-    let num = parseInt(digits, 10);
-
-    for (let i = 0; i < safeQty; i += 1, num += 1) {
-      const suffix = String(num).padStart(width, '0');
-      result.push(prefix + suffix);
-    }
-  } else {
-    for (let i = 1; i <= safeQty; i += 1) {
-      const suffix = String(i).padStart(2, '0');
-      result.push(`${baseNo}-${suffix}`);
-    }
+  // 固定使用 baseNo-001, baseNo-002 格式，流水號固定 3 碼
+  for (let i = 1; i <= safeQty; i += 1) {
+    const suffix = String(i).padStart(3, '0');
+    result.push(`${baseNo}-${suffix}`);
   }
 
   return result;
